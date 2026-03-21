@@ -8,13 +8,13 @@ namespace CrossRoundArena.UI
 {
     public class PlayerUI : MonoBehaviour, IPointerClickHandler
     {
-        public TextMeshProUGUI hpText;
-        public TextMeshProUGUI coinsText;
-        public TextMeshProUGUI costText;
-        public Image leaderIcon;
-        public Image ghostIcon;
+        [JapaneseLabel("HPテキスト")] public TextMeshProUGUI hpText;
+        [JapaneseLabel("コインテキスト")] public TextMeshProUGUI coinsText;
+        [JapaneseLabel("コストテキスト")] public TextMeshProUGUI costText;
+        [JapaneseLabel("リーダーアイコン")] public Image leaderIcon;
+        [JapaneseLabel("死亡アイコン")] public Image ghostIcon;
 
-        private PlayerState targetPlayer;
+         public PlayerState targetPlayer;
 
         public void SetPlayer(PlayerState player)
         {
@@ -26,20 +26,27 @@ namespace CrossRoundArena.UI
         {
             if (targetPlayer == null) return;
 
-            hpText.text = $"HP: {targetPlayer.currentHP}/{targetPlayer.maxHP}";
-            coinsText.text = $"Coins: {targetPlayer.coins}";
-            costText.text = $"Cost: {targetPlayer.currentCost}/{targetPlayer.maxCost}";
+            // 本体（PlayerUI自身）のImageをリーダーアイコンにする
+            Image mainImage = GetComponent<Image>();
+            if (mainImage != null && targetPlayer.leader != null)
+            {
+                mainImage.sprite = targetPlayer.leader.leaderIcon;
+            }
+
+            // 各UIコンポーネントのアサインを確認しながら安全に更新
+            if (hpText != null) hpText.text = $"HP: {targetPlayer.currentHP}/{targetPlayer.maxHP}";
+            if (coinsText != null) coinsText.text = $"Coins: {targetPlayer.coins}";
+            if (costText != null) costText.text = $"Cost: {targetPlayer.currentCost}/{targetPlayer.maxCost}";
             
             if (targetPlayer.leader != null)
-                leaderIcon.sprite = targetPlayer.leader.leaderIcon;
-
-            if (targetPlayer.status == PlayerStatus.Ghost)
             {
-                ghostIcon.gameObject.SetActive(true);
+                if (leaderIcon != null) leaderIcon.sprite = targetPlayer.leader.leaderIcon;
+                if (ghostIcon != null) ghostIcon.sprite = targetPlayer.leader.ghostIcon;
             }
-            else
+
+            if (ghostIcon != null)
             {
-                ghostIcon.gameObject.SetActive(false);
+                ghostIcon.gameObject.SetActive(targetPlayer.status == PlayerStatus.Ghost);
             }
         }
 

@@ -8,13 +8,13 @@ namespace CrossRoundArena.UI
 {
     public class CardUI : MonoBehaviour
     {
-        public TextMeshProUGUI cardNameText;
-        public TextMeshProUGUI cardDescriptionText;
-        public TextMeshProUGUI costText;
-        public Image cardIcon;
-        public Image cardBackground;
+        [JapaneseLabel("カード名テキスト")] public TextMeshProUGUI cardNameText;
+        [JapaneseLabel("説明テキスト")] public TextMeshProUGUI cardDescriptionText;
+        [JapaneseLabel("コストテキスト")] public TextMeshProUGUI costText;
+        [JapaneseLabel("カード画像")] public Image cardIcon;
+        [JapaneseLabel("背景画像")] public Image cardBackground;
 
-        public CardData cardData;
+        [JapaneseLabel("カードデータ")] public CardData cardData;
 
         public void SetCard(CardData card)
         {
