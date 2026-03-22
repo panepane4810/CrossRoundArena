@@ -14,6 +14,11 @@ namespace CrossRoundArena.Editor
             label.text = attr.label;
             EditorGUI.PropertyField(position, property, label, true);
         }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return EditorGUI.GetPropertyHeight(property, label, true);
+        }
     }
 }
 #endif

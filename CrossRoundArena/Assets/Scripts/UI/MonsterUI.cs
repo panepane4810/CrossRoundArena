@@ -17,6 +17,11 @@ namespace CrossRoundArena.UI
 
         private MonsterInstance targetMonster;
 
+        private void Start()
+        {
+            UpdateUI();
+        }
+
         public void SetMonster(MonsterInstance monster)
         {
             targetMonster = monster;

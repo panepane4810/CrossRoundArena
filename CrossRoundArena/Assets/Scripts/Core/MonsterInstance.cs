@@ -25,6 +25,8 @@ namespace CrossRoundArena.Core
             this.currentHP = data.hp;
             this.activeKeywords.AddRange(data.keywords);
             
+            UpdatePower();
+            
             // "Haste" allows attacking immediately
             if (activeKeywords.Contains(Keyword.Haste))
             {
@@ -75,6 +77,37 @@ namespace CrossRoundArena.Core
         public void RefreshTurn()
         {
             hasAttackedThisTurn = false;
+            UpdatePower();
+        }
+
+        public void UpdatePower()
+        {
+            if (Data == null || owner == null) return;
+
+            int baseAttack = Data.attack;
+            
+            // 「同名カード強化」フラグがある場合のみ計算
+            if (Data.buffBySameNameCount)
+            {
+                int sameNameCount = 0;
+                foreach (var monster in owner.boardMonsters)
+                {
+                    // 自身も含めてカウント
+                    if (monster.Data != null && monster.Data.cardName == this.Data.cardName)
+                    {
+                        sameNameCount++;
+                    }
+                }
+                
+                // 自分以外の同名カードの数だけ加算 (自身が1体なら+0, 2体なら+1...)
+                // ※解釈により「自身の数だけ」なら sameNameCount そのまま
+                currentAttack = baseAttack + (sameNameCount - 1);
+            }
+            else
+            {
+                // バフがない場合は基本値に戻す（他のバフ効果がある場合はここを調整）
+                currentAttack = baseAttack;
+            }
         }
 
         public bool HasKeyword(Keyword keyword)

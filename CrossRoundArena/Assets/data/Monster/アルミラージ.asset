@@ -9,17 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 1c8f4caaa30d3b344b8cbc83c4318e8a, type: 3}
   m_Name: "\u30A2\u30EB\u30DF\u30E9\u30FC\u30B8"
-  m_EditorClassIdentifier: Assembly-CSharp:CrossRoundArena.Data:MonsterCardData
+  m_EditorClassIdentifier: Assembly-CSharp::CrossRoundArena.Data.MonsterCardData
   cardType: 0
   cardName: "\u30A2\u30EB\u30DF\u30E9\u30FC\u30B8"
-  cardDescription: 
-  initialCost: 0
-  purchaseCoin: 0
+  cardDescription: "\u30B9\u30D4\u30FC\u30C9"
+  initialCost: 2
+  purchaseCoin: 1
   cardIcon: {fileID: -4254447548763015857, guid: eaff53ba1df3450499c897936a63c472, type: 3}
   keywords: 
-  attack: 0
-  hp: 0
-  hasHaste: 0
+  attack: 2
+  hp: 1
+  hasHaste: 1
   hasGuard: 0
+  buffBySameNameCount: 0

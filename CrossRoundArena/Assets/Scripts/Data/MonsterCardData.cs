@@ -11,6 +11,7 @@ namespace CrossRoundArena.Data
         [JapaneseLabel("体力")] public int hp;
         [JapaneseLabel("速攻")] public bool hasHaste;
         [JapaneseLabel("ガード")] public bool hasGuard;
+        [JapaneseLabel("同名カード強化")] public bool buffBySameNameCount;
 
         private void OnEnable()
         {
