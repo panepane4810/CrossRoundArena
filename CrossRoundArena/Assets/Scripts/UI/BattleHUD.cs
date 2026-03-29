@@ -10,20 +10,20 @@ namespace CrossRoundArena.UI
         public static BattleHUD instance;
 
         [Header("Round Info")]
-        public TextMeshProUGUI roundText;
-        public TextMeshProUGUI phaseText; // Current Player's Turn or Event phase
+        [JapaneseLabel("ラウンドテキスト")] public TextMeshProUGUI roundText;
+        [JapaneseLabel("フェーズテキスト")] public TextMeshProUGUI phaseText; // Current Player's Turn or Event phase
         
         [Header("Timer")]
-        public TextMeshProUGUI timerText;
-        public Image timerFillImage;
+        [JapaneseLabel("タイマーテキスト")] public TextMeshProUGUI timerText;
+        [JapaneseLabel("タイマーゲージ")] public Image timerFillImage;
 
         [Header("Event Display")]
-        public GameObject eventPanel;
-        public TextMeshProUGUI eventNameText;
-        public TextMeshProUGUI eventDescriptionText;
+        [JapaneseLabel("イベントパネル")] public GameObject eventPanel;
+        [JapaneseLabel("イベント名テキスト")] public TextMeshProUGUI eventNameText;
+        [JapaneseLabel("イベント詳細テキスト")] public TextMeshProUGUI eventDescriptionText;
 
         [Header("Buttons")]
-        public Button endTurnButton;
+        [JapaneseLabel("ターン終了ボタン")] public Button endTurnButton;
 
         private void Awake()
         {

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c8f4caaa30d3b344b8cbc83c4318e8a, type: 3}
+  m_Name: "\u30DF\u30A4\u30E9"
+  m_EditorClassIdentifier: Assembly-CSharp::CrossRoundArena.Data.MonsterCardData
+  cardType: 0
+  cardName: "\u30DF\u30A4\u30E9"
+  cardDescription: "1\u4F53\u306E\u8EAB\u306B\u7740\u3051\u3066\u3044\u308B\u88C5\u50991\u3064\u5C71\u672D\u306B\u623B\u3059"
+  initialCost: 3
+  purchaseCoin: 2
+  cardIcon: {fileID: -599100444609917732, guid: eede1372c49f7694ea9add43ed785be1, type: 3}
+  keywords: 
+  attack: 3
+  hp: 3
+  hasHaste: 0
+  hasGuard: 0
+  buffBySameNameCount: 0

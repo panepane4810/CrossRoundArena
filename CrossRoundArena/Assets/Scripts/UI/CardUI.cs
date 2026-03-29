@@ -8,13 +8,26 @@ namespace CrossRoundArena.UI
 {
     public class CardUI : MonoBehaviour
     {
-        public TextMeshProUGUI cardNameText;
-        public TextMeshProUGUI cardDescriptionText;
-        public TextMeshProUGUI costText;
-        public Image cardIcon;
-        public Image cardBackground;
+        [JapaneseLabel("カード名テキスト")] public TextMeshProUGUI cardNameText;
+        [JapaneseLabel("説明テキスト")] public TextMeshProUGUI cardDescriptionText;
+        [JapaneseLabel("コストテキスト")] public TextMeshProUGUI costText;
+        [JapaneseLabel("カード画像(描画先)")] public Image cardImage;
+        [JapaneseLabel("カード画像(ソース)")] public Sprite cardIcon;
+        [JapaneseLabel("背景画像")] public Image cardBackground;
+        [JapaneseLabel("攻撃力テキスト")] public TextMeshProUGUI attackText;
+        [JapaneseLabel("体力テキスト")] public TextMeshProUGUI hpText;
 
-        public CardData cardData;
+        private void Awake()
+        {
+            if (cardImage == null) cardImage = GetComponent<Image>();
+        }
+
+        [JapaneseLabel("カードデータ")] public CardData cardData;
+
+        private void Start()
+        {
+            UpdateUI();
+        }
 
         public void SetCard(CardData card)
         {
@@ -26,16 +39,25 @@ namespace CrossRoundArena.UI
         {
             if (cardData == null) return;
 
-            cardNameText.text = cardData.cardName;
-            cardDescriptionText.text = cardData.cardDescription;
-            costText.text = cardData.initialCost.ToString();
+            if (cardNameText != null) cardNameText.text = cardData.cardName;
+            if (cardDescriptionText != null) cardDescriptionText.text = cardData.cardDescription;
+            if (costText != null) costText.text = cardData.initialCost.ToString();
             
             if (cardData.cardIcon != null)
-                cardIcon.sprite = cardData.cardIcon;
+            {
+                cardIcon = cardData.cardIcon;
+                if (cardImage != null) cardImage.sprite = cardIcon;
+            }
 
             if (cardData is MonsterCardData monsterData)
             {
-                // ATK/HP display logic could go here
+                if (attackText != null) attackText.text = monsterData.attack.ToString();
+                if (hpText != null) hpText.text = monsterData.hp.ToString();
+            }
+            else
+            {
+                if (attackText != null) attackText.text = "";
+                if (hpText != null) hpText.text = "";
             }
         }
 

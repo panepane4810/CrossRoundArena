@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155b88a22cf3a9a448ff78f0f42735c1, type: 3}
+  m_Name: LeaderDataMage
+  m_EditorClassIdentifier: Assembly-CSharp::CrossRoundArena.Data.LeaderData
+  leaderType: 3
+  leaderName: "\u30EA\u30EA\u30A3"
+  initialHP: 15
+  traitDescription: 
+  leaderIcon: {fileID: 8551060523938045910, guid: c938b0cfcd4bf17408a362fb51bc3ef9, type: 3}
+  ghostIcon: {fileID: 4731839438154622499, guid: 4ff28f1db739fc647b32dd683f36dc29, type: 3}

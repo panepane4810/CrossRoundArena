@@ -12,11 +12,11 @@ namespace CrossRoundArena.Core
 
         public List<PlayerState> activePlayers = new List<PlayerState>();
         public List<GameEvent> eventPool = new List<GameEvent>();
-        public GameEvent currentActiveEvent;
-        public int currentRound = 1;
-        public int currentPlayerIndex = 0;
-        public float turnTimeLimit = 30f;
-        public float currentTurnTimeRemaining;
+        [JapaneseLabel("現在のイベント")] public GameEvent currentActiveEvent;
+        [JapaneseLabel("現在のラウンド")] public int currentRound = 1;
+        [JapaneseLabel("手番プレイヤー")] public int currentPlayerIndex = 0;
+        [JapaneseLabel("制限時間")] public float turnTimeLimit = 30f;
+        [JapaneseLabel("残り時間")] public float currentTurnTimeRemaining;
 
         private void Awake()
         {
@@ -31,24 +31,42 @@ namespace CrossRoundArena.Core
             }
         }
 
+        public void BeginSelection()
+        {
+            if (LeaderSelectionUI.instance != null)
+            {
+                LeaderSelectionUI.instance.StartSelection();
+            }
+            else
+            {
+                StartGame();
+            }
+        }
+
         public void StartGame()
         {
-            // 初期設定の読み込み
-            // 対戦相手の設定
-            // デッキの初期化
-            // 先攻後攻の決定
             InitializePlayers();
+            
+            // 全PlayerUIを更新して、選択したリーダーを表示
+            var playerUIs = UnityEngine.Object.FindObjectsByType<UI.PlayerUI>(FindObjectsSortMode.None);
+            foreach (var ui in playerUIs)
+            {
+                ui.UpdateUI();
+            }
+
             StartTurn();
         }
 
         private void InitializePlayers()
         {
-            // ここでプレイヤーの初期HP、コイン、コストなどを設定
             foreach (var player in activePlayers)
             {
-                player.currentHP = player.leader.initialHP;
-                player.maxHP = player.leader.initialHP;
-                player.currentCost = 0; // 先攻0 / 後攻1のロジックが必要
+                if (player.leader != null)
+                {
+                    player.currentHP = player.leader.initialHP;
+                    player.maxHP = player.leader.initialHP;
+                }
+                player.currentCost = 0;
                 player.maxCost = 1;
                 player.coins = 0;
             }

@@ -9,9 +9,9 @@ namespace CrossRoundArena.UI
     {
         public static MerchantUI instance;
 
-        public GameObject panel;
-        public Transform cardContainer;
-        public GameObject cardPrefab; // CardUI component attached
+        [JapaneseLabel("ショップパネル")] public GameObject panel;
+        [JapaneseLabel("カードコンテナ")] public Transform cardContainer;
+        [JapaneseLabel("カードプレハブ")] public GameObject cardPrefab; // CardUI component attached
 
         private List<CardData> availableCards = new List<CardData>();
         private PlayerState shoppingPlayer;

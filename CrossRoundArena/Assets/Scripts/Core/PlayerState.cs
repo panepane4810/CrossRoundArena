@@ -138,6 +138,12 @@ namespace CrossRoundArena.Core
                 var newMonster = new MonsterInstance(data, this);
                 boardMonsters.Add(newMonster);
 
+                // もし「同名カード強化」持ちがいれば、盤面全体の攻撃力を再計算する
+                foreach (var monster in boardMonsters)
+                {
+                    monster.UpdatePower();
+                }
+
                 // Speed calculation if needed
                 if (newMonster.HasKeyword(Keyword.Haste))
                 {

@@ -1,58 +1,59 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using CrossRoundArena.Core;
+using CrossRoundArena.Data;
 
 namespace CrossRoundArena.UI
 {
-    public class MonsterUI : MonoBehaviour, IPointerClickHandler
+    public class MonsterUI : MonoBehaviour
     {
-        public TextMeshProUGUI attackText;
-        public TextMeshProUGUI hpText;
-        public Image monsterIcon;
-        public Image guardIcon; // ガード持ちの場合のアイコン
+        [JapaneseLabel("基本データ")] public CardData monsterData; // ここを CardData に広げる
+        
+        [JapaneseLabel("コストテキスト")] public TextMeshProUGUI costText;
+        [JapaneseLabel("攻撃力テキスト")] public TextMeshProUGUI attackText;
+        [JapaneseLabel("体力テキスト")] public TextMeshProUGUI hpText;
+        [JapaneseLabel("モンスター画像")] public Image monsterIcon;
 
-        private MonsterInstance monsterInstance;
+        private MonsterInstance targetMonster;
+
+        private void Start()
+        {
+            UpdateUI();
+        }
 
         public void SetMonster(MonsterInstance monster)
         {
-            monsterInstance = monster;
+            targetMonster = monster;
+            monsterData = monster?.Data;
             UpdateUI();
         }
 
         public void UpdateUI()
         {
-            if (monsterInstance == null) return;
+            // インスタンス（実体）優先、なければアタッチされたデータ(SO)
+            CardData baseData = (targetMonster != null) ? targetMonster.Data : monsterData;
+            if (baseData == null) return;
 
-            attackText.text = monsterInstance.currentAttack.ToString();
-            hpText.text = $"{monsterInstance.currentHP}/{monsterInstance.maxHP}";
-            
-            if (guardIcon != null)
-                guardIcon.gameObject.SetActive(monsterInstance.HasKeyword(Keyword.Guard));
-        }
+            // モンスター固有の情報を取得（MonsterCardData型であるか確認）
+            MonsterCardData mData = baseData as MonsterCardData;
 
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (monsterInstance == null) return;
+            // 基本情報の表示 (CardDataにある共通項目)
+            if (costText != null) costText.text = baseData.initialCost.ToString();
+            if (monsterIcon != null) monsterIcon.sprite = baseData.cardIcon;
 
-            // TargetSelectionManagerに通知
-            if (TargetSelectionManager.instance.currentMode != SelectionMode.None)
+            // 攻撃力・体力の表示
+            if (targetMonster != null)
             {
-                TargetSelectionManager.instance.OnTargetClicked(monsterInstance);
+                // 実体がある場合は「現在値」を表示
+                if (attackText != null) attackText.text = targetMonster.currentAttack.ToString();
+                if (hpText != null) hpText.text = targetMonster.currentHP.ToString();
             }
-            else
+            else if (mData != null)
             {
-                // セレクションモードでない場合は、攻撃開始の起点になる
-                // (例: 自分のモンスターをクリックして敵を狙う攻撃モードへ)
-                if (monsterInstance.owner == GameManager.instance.activePlayers[GameManager.instance.currentPlayerIndex])
-                {
-                    TargetSelectionManager.instance.StartAttackTargetSelection(monsterInstance, target => 
-                    {
-                        CombatSystem.ExecuteAttack(monsterInstance, target);
-                        UpdateUI(); // 攻撃後のステータス反映
-                    });
-                }
+                // モンスターデータ単体の場合は「初期値」を表示
+                if (attackText != null) attackText.text = mData.attack.ToString();
+                if (hpText != null) hpText.text = mData.hp.ToString();
             }
         }
     }
